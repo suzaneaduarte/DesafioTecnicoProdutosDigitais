@@ -31,6 +31,26 @@ Aplicação web desenvolvida em React + TypeScript que permite o cadastro, lista
 
 - Tratamento de erros
 
+## Pré-Visualização das telas 
+
+### Lista de Produtos
+
+Nesta tela é possível visualizar todos os produtos cadastrados com seus respectivos nomes, marcas, preços e imagens. Também é possível filtrar produtos pelo nome e navegar por diferentes páginas. 
+
+![lista-produtos](https://github.com/user-attachments/assets/257ba98a-9849-429f-b5ba-47cdc2eead47)
+
+### Cadastro de Produto
+
+A tela de cadastro permite inserir nome, preço, marca, descrição e imagem do produto. Os campos obrigatórios possuem validações visuais, garantindo uma experiência fluida e segura para o usuário.
+
+![cadastro-produtos](https://github.com/user-attachments/assets/e66813d3-90ad-4845-b2f2-12027fe4c858)
+
+### Simulação de Delay / Carregamento
+
+Para simular o comportamento de uma API real, o sistema introduz um pequeno delay no carregamento dos dados. Durante esse tempo, um estado de "loading" é exibido de forma clara ao usuário.
+
+![load-tratamento-dados](https://github.com/user-attachments/assets/394b4594-e854-4d39-926d-42a377aed23b)
+
 ## Como executar localmente
 
 1. Clone o repositório:
