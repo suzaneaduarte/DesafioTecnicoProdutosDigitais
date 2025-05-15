@@ -40,10 +40,9 @@ const SectionTitle = styled.h3`
 
 const Form = styled.form`
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 3rem;
+  grid-template-columns: 3fr 2fr;
+  gap: 2rem;
   width: 100%;
-  align-items: start;
 `;
 
 const MainContent = styled.div`
@@ -67,13 +66,16 @@ const FormRow = styled.div`
   width: 100%;
 `;
 
-const FormGroup = styled.div<{ fullWidth?: boolean }>`
+const FormGroup = styled.div<{ fullWidth?: boolean; offsetTop?: boolean }>`
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.2rem;
   width: 100%;
   ${props => props.fullWidth && `
     grid-column: 1 / -1;
+  `}
+  ${props => props.offsetTop && `
+    margin-top: 2rem;
   `}
 `;
 
@@ -156,7 +158,7 @@ const TextArea = styled.textarea`
   ${baseInputStyles}
   width: 100%;
   box-sizing: border-box;
-  min-height: 150px;
+  min-height: 178px;
   resize: vertical;
 `;
 
@@ -174,7 +176,7 @@ const ImageUploadContainer = styled(FormGroup)`
 const ImagePreviewWrapper = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 68%;
+  padding-top: 60%;
   background-color: var(--background);
   border-radius: var(--radius-lg);
   overflow: hidden;
@@ -205,7 +207,7 @@ const ImagePreview = styled.div<{ hasImage: boolean }>`
     width: 100%;
     height: 100%;
     object-fit: contain;
-    padding: 1rem;
+    padding: 0.5rem;
   }
 `;
 
@@ -215,12 +217,12 @@ const UploadPlaceholder = styled.div`
   align-items: center;
   gap: 0.75rem;
   color: var(--text-light);
-  padding: 1rem;
+  padding: 0.5rem;
   text-align: center;
 
   svg {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     color: var(--primary);
     opacity: 0.5;
   }
@@ -234,8 +236,7 @@ const ImageTip = styled.span`
   display: block;
   color: var(--text-light);
   font-size: 0.875rem;
-  margin-top: 0.25rem;
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 `;
 
 const ButtonContainer = styled.div`
@@ -344,7 +345,7 @@ export function ProductForm() {
         <SectionTitle>Informações do Produto</SectionTitle>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <MainContent>
-            <FormGroup fullWidth>
+            <FormGroup>
               <Label htmlFor="name" required>Nome do Produto</Label>
               <Input
                 id="name"
@@ -402,7 +403,6 @@ export function ProductForm() {
           <ImageContent>
             <FormGroup>
               <Label htmlFor="image">Imagem do Produto</Label>
-              <ImageTip>Recomendado: Imagem com fundo transparente ou branco</ImageTip>
               <Input
                 id="image"
                 type="file"
@@ -426,6 +426,7 @@ export function ProductForm() {
                   )}
                 </ImagePreview>
               </ImagePreviewWrapper>
+              <ImageTip>Recomendado: Imagem com fundo transparente ou branco</ImageTip>
             </FormGroup>
           </ImageContent>
 
