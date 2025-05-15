@@ -1,10 +1,8 @@
-# 🛒 SuperSuzy — Sistema de Gestão de Produtos de Supermercado
+# SuperSuzy — Sistema de Gestão de Produtos de Supermercado
 
 Aplicação web desenvolvida em React + TypeScript que permite o cadastro, listagem e visualização de produtos de supermercado com dados mockados via localStorage.
 
----
-
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -14,9 +12,7 @@ Aplicação web desenvolvida em React + TypeScript que permite o cadastro, lista
 - [React Router DOM](https://reactrouter.com/)
 - Armazenamento local via `localStorage`
 
----
-
-## 📦 Funcionalidades
+## Funcionalidades
 
 - Listagem de produtos com:
   - Busca por nome (com debounce)
@@ -31,9 +27,9 @@ Aplicação web desenvolvida em React + TypeScript que permite o cadastro, lista
 
 - Estilização consistente com tema visual
 
----
+- Responsividade adequada para telas mobile
 
-## 🧪 Como executar localmente
+## Como executar localmente
 
 1. Clone o repositório:
 
@@ -60,9 +56,7 @@ npm run dev
 http://localhost:5173
 ```
 
----
-
-## 📝 Estrutura de Pastas
+## Estrutura de Pastas
 
 ```
 src/
@@ -74,9 +68,6 @@ src/
 └── hooks/           # Custom hooks (debounce)
 ```
 
----
-
 ## 👩‍💻 Desenvolvido por
 
 Suzane Alves Duarte 
-

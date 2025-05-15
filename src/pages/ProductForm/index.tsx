@@ -10,6 +10,12 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  padding: 0 2.5rem;
+
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+    gap: 1.5rem;
+  }
 `;
 
 const PageTitle = styled.h2`
@@ -17,7 +23,10 @@ const PageTitle = styled.h2`
   color: var(--text);
   font-weight: 600;
   margin: 0;
-  padding: 0;
+
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
 `;
 
 const FormSection = styled.div`
@@ -27,6 +36,11 @@ const FormSection = styled.div`
   padding: 2.5rem;
   width: 100%;
   margin: 0;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+  }
 `;
 
 const SectionTitle = styled.h3`
@@ -36,6 +50,11 @@ const SectionTitle = styled.h3`
   margin-bottom: 2rem;
   padding-bottom: 1rem;
   border-bottom: 2px solid var(--border);
+
+  @media (max-width: 768px) {
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const Form = styled.form`
@@ -43,6 +62,11 @@ const Form = styled.form`
   grid-template-columns: 3fr 2fr;
   gap: 2rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
 `;
 
 const MainContent = styled.div`
@@ -50,6 +74,10 @@ const MainContent = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    gap: 1rem;
+  }
 `;
 
 const ImageContent = styled.div`
@@ -64,6 +92,11 @@ const FormRow = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   width: 100%;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const FormGroup = styled.div<{ fullWidth?: boolean; offsetTop?: boolean }>`
@@ -124,6 +157,11 @@ const Input = styled.input`
   width: 100%;
   box-sizing: border-box;
 
+  @media (max-width: 768px) {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+  }
+
   &[type="file"] {
     display: none;
   }
@@ -149,6 +187,13 @@ const Select = styled.select`
   padding-right: 3rem;
   cursor: pointer;
 
+  @media (max-width: 768px) {
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+  }
+
   &:invalid {
     color: var(--text-light);
   }
@@ -158,8 +203,14 @@ const TextArea = styled.textarea`
   ${baseInputStyles}
   width: 100%;
   box-sizing: border-box;
-  min-height: 178px;
+  min-height: 172px;
   resize: vertical;
+
+  @media (max-width: 768px) {
+    min-height: 150px;
+    padding: 0.875rem 1rem;
+    font-size: 1rem;
+  }
 `;
 
 const ErrorMessage = styled.span`
@@ -180,6 +231,10 @@ const ImagePreviewWrapper = styled.div`
   background-color: var(--background);
   border-radius: var(--radius-lg);
   overflow: hidden;
+
+  @media (max-width: 768px) {
+    padding-top: 75%;
+  }
 `;
 
 const ImagePreview = styled.div<{ hasImage: boolean }>`
@@ -245,6 +300,10 @@ const ButtonContainer = styled.div`
   justify-content: center;
   margin-top: 2.5rem;
   gap: 1rem;
+
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+  }
 `;
 
 const Button = styled.button`
@@ -259,6 +318,11 @@ const Button = styled.button`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
 
   &:hover:not(:disabled) {
     background-color: var(--primary-dark);
@@ -339,7 +403,7 @@ export function ProductForm() {
 
   return (
     <FormContainer>
-      <PageTitle>Novo Produto</PageTitle>
+      <PageTitle>Cadastrar Produto</PageTitle>
 
       <FormSection>
         <SectionTitle>Informações do Produto</SectionTitle>

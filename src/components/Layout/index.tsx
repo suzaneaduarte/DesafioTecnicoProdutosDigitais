@@ -25,6 +25,12 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 768px) {
+    padding: 0 1rem;
+    flex-direction: column;
+    gap: 1rem;
+  }
 `;
 
 const Logo = styled.div`
@@ -32,11 +38,23 @@ const Logo = styled.div`
     height: 96px;
     width: auto;
   }
+
+  @media (max-width: 768px) {
+    img {
+      height: 72px;
+    }
+  }
 `;
 
 const NavLinks = styled.div`
   display: flex;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+  }
 
   a {
     color: var(--text);
@@ -46,6 +64,13 @@ const NavLinks = styled.div`
     transition: all 0.2s;
     font-size: 1.2rem;
     font-weight: 500;
+
+    @media (max-width: 768px) {
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      flex: 1;
+      text-align: center;
+    }
 
     &:hover {
       background-color: var(--background);
@@ -70,6 +95,14 @@ const Main = styled.main`
     max-width: var(--container-width);
     padding: 0 2rem;
   }
+
+  @media (max-width: 768px) {
+    padding: 2rem 0;
+
+    > * {
+      padding: 0 1rem;
+    }
+  }
 `;
 
 export function Layout() {
@@ -84,7 +117,7 @@ export function Layout() {
           </Logo>
           <NavLinks>
             <Link to="/">Produtos</Link>
-            <Link to="/produtos/novo">Novo Produto</Link>
+            <Link to="/produtos/novo">Cadastrar Produto</Link>
           </NavLinks>
         </Nav>
       </Header>
