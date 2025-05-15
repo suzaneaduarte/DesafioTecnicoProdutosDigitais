@@ -2,7 +2,7 @@
 
 Aplicação web desenvolvida em React + TypeScript que permite o cadastro, listagem e visualização de produtos de supermercado com dados mockados via localStorage.
 
-## Tecnologias Utilizadas
+## Stacks
 
 - [React](https://reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
@@ -28,6 +28,8 @@ Aplicação web desenvolvida em React + TypeScript que permite o cadastro, lista
 - Estilização consistente com tema visual
 
 - Responsividade adequada para telas mobile
+
+- Tratamento de erros
 
 ## Como executar localmente
 

@@ -277,6 +277,7 @@ export function ProductList() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -284,12 +285,14 @@ export function ProductList() {
   useEffect(() => {
     async function loadProducts() {
       setLoading(true);
+      setError(null);
       try {
         const response = await api.getProducts(currentPage, debouncedSearchTerm);
         setProducts(response.data);
         setTotalItems(response.total);
       } catch (error) {
         console.error('Erro ao carregar produtos:', error);
+        setError('Erro ao carregar produtos. Tente novamente mais tarde.');
       } finally {
         setLoading(false);
       }
@@ -314,7 +317,12 @@ export function ProductList() {
         </SearchContainer>
       </PageHeader>
 
-      {loading ? (
+      {error ? (
+        <LoadingState>
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>Tentar novamente</button>
+        </LoadingState>
+      ) : loading ? (
         <LoadingState>Carregando produtos...</LoadingState>
       ) : (
         <>

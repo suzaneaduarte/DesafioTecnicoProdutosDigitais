@@ -152,10 +152,20 @@ const baseInputStyles = `
   }
 `;
 
-const Input = styled.input`
+const Input = styled.input<{ hasError?: boolean }>`
   ${baseInputStyles}
   width: 100%;
   box-sizing: border-box;
+  border-color: ${props => props.hasError ? 'var(--error)' : 'var(--border)'};
+
+  &:hover {
+    border-color: ${props => props.hasError ? 'var(--error)' : 'var(--primary-light)'};
+  }
+
+  &:focus {
+    border-color: ${props => props.hasError ? 'var(--error)' : 'var(--primary)'};
+    box-shadow: 0 0 0 3px ${props => props.hasError ? 'rgba(239, 68, 68, 0.2)' : 'var(--primary-bg)'};
+  }
 
   @media (max-width: 768px) {
     padding: 0.875rem 1rem;
@@ -176,7 +186,7 @@ const Input = styled.input`
   }
 `;
 
-const Select = styled.select`
+const Select = styled.select<{ hasError?: boolean }>`
   ${baseInputStyles}
   width: 100%;
   box-sizing: border-box;
@@ -186,6 +196,16 @@ const Select = styled.select`
   background-position: right 1.25rem center;
   padding-right: 3rem;
   cursor: pointer;
+  border-color: ${props => props.hasError ? 'var(--error)' : 'var(--border)'};
+
+  &:hover {
+    border-color: ${props => props.hasError ? 'var(--error)' : 'var(--primary-light)'};
+  }
+
+  &:focus {
+    border-color: ${props => props.hasError ? 'var(--error)' : 'var(--primary)'};
+    box-shadow: 0 0 0 3px ${props => props.hasError ? 'rgba(239, 68, 68, 0.2)' : 'var(--primary-bg)'};
+  }
 
   @media (max-width: 768px) {
     padding: 0.875rem 1rem;
@@ -415,7 +435,14 @@ export function ProductForm() {
                 id="name"
                 type="text"
                 placeholder="Digite o nome do produto"
-                {...register('name', { required: 'Nome é obrigatório' })}
+                hasError={!!errors.name}
+                {...register('name', {
+                  required: 'Nome é obrigatório',
+                  minLength: {
+                    value: 3,
+                    message: 'Nome deve ter pelo menos 3 caracteres'
+                  }
+                })}
               />
               {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
             </FormGroup>
@@ -428,9 +455,11 @@ export function ProductForm() {
                   type="number"
                   step="0.01"
                   placeholder="0,00"
+                  hasError={!!errors.price}
                   {...register('price', {
                     required: 'Preço é obrigatório',
                     min: { value: 0.01, message: 'Preço deve ser maior que zero' },
+                    validate: value => !isNaN(value) || 'Preço inválido'
                   })}
                 />
                 {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage>}
@@ -441,6 +470,7 @@ export function ProductForm() {
                 <Select
                   id="brandId"
                   defaultValue=""
+                  hasError={!!errors.brandId}
                   {...register('brandId', { required: 'Marca é obrigatória' })}
                 >
                   <option value="" disabled>Selecione uma marca</option>

@@ -13,7 +13,7 @@ const initialBrands: Brand[] = [
   { id: uuidv4(), name: 'Coca-Cola' },
   { id: uuidv4(), name: 'Franuí' },
   { id: uuidv4(), name: 'Micos' },
-  { id: uuidv4(), name: 'Nuggets' },
+  { id: uuidv4(), name: 'Sadia' },
 ];
 
 // Mock inicial de produtos
