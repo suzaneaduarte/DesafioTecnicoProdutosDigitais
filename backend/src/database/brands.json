@@ -1,4 +1,62 @@
 [
-  { "id": "1", "name": "Apple" },
-  { "id": "2", "name": "Samsung" }
+  {
+    "id": "1",
+    "name": "Nestlé"
+  },
+  {
+    "id": "2",
+    "name": "Coca-Cola"
+  },
+  {
+    "id": "3",
+    "name": "Ypê"
+  },
+  {
+    "id": "4",
+    "name": "Dove"
+  },
+  {
+    "id": "5",
+    "name": "Sadia"
+  },
+  {
+    "id": "6",
+    "name": "Perdigão"
+  },
+  {
+    "id": "7",
+    "name": "Quaker"
+  },
+  {
+    "id": "8",
+    "name": "Unilever"
+  },
+  {
+    "id": "9",
+    "name": "Seara"
+  },
+  {
+    "id": "10",
+    "name": "Nescafé"
+  },
+  {
+    "id": "11",
+    "name": "Pão de Açúcar"
+  },
+  {
+    "id": "12",
+    "name": "Piracanjuba"
+  },
+  {
+    "id": "13",
+    "name": "Omo"
+  },
+  {
+    "id": "14",
+    "name": "Procter & Gamble"
+  },
+  {
+    "id": "15",
+    "name": "Bauducco"
+  }
 ]

@@ -4,15 +4,12 @@ import type { Brand, Product } from '../types';
 export const api = {
   // Produtos
   async getProducts(page: number = 1, name?: string): Promise<{ data: Product[], total: number }> {
-    const response = await fetch(`http://localhost:3000/api/products?name=${name || ''}`);
+    const response = await fetch(`http://localhost:3000/api/products?page=${page}&name=${name || ''}`);
     if (!response.ok) {
       throw new Error('Erro ao buscar produtos');
     }
     const data = await response.json();
-    return {
-      data: data,
-      total: data.length 
-    };
+    return data; // O backend já retorna no formato { data: Product[], total: number }
   },
 
   async createProduct(product: Omit<Product, 'id'>): Promise<Product> {
@@ -29,7 +26,8 @@ export const api = {
       throw new Error('Erro ao criar produto');
     }
 
-    return await response.json();
+    const result = await response.json();
+    return result.product; // Extrai apenas o objeto product da resposta
   },
 
   // Marcas
