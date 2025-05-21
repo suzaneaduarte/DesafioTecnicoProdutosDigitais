@@ -16,6 +16,7 @@ export const api = {
   },
 
   async createProduct(product: Omit<Product, 'id'>): Promise<Product> {
+    console.log("Enviando produto:", product);
     const response = await fetch('http://localhost:3000/api/products', {
       method: 'POST',
       headers: {

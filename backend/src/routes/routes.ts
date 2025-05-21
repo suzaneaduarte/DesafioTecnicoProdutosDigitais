@@ -1,12 +1,14 @@
-import express from 'express';
-import { Product, products, brands } from '../database/mockDatabase';
+import express, { Request, Response, Router } from 'express';
+import { Product, products, brands, saveProducts } from '../database/mockDatabase';
+import { randomUUID } from 'crypto';
 
-const router = express.Router();
+const router: Router = express.Router();
 
-router.post('/products', (req, res) => {
-  const { id, name, price, description, image, brandId } = req.body as Product;
+// Criar produto
+router.post('/products', (req: Request, res: Response) => {
+  const { name, price, description, image, brandId } = req.body;
 
-  if (!id || !name || !price || !brandId) {
+  if (!name || !price || !brandId) {
     return res.status(400).json({ error: 'Campos obrigatórios não preenchidos.' });
   }
 
@@ -18,8 +20,17 @@ router.post('/products', (req, res) => {
     return res.status(409).json({ error: 'Produto com essa marca e nome já existe.' });
   }
 
-  const newProduct: Product = { id, name, price, description, image, brandId };
+  const newProduct: Product = {
+    id: randomUUID(), 
+    name,
+    price,
+    description,
+    image,
+    brandId,
+  };
+
   products.push(newProduct);
+  saveProducts();
 
   return res.status(201).json({
     message: 'Produto criado com sucesso',
@@ -27,7 +38,8 @@ router.post('/products', (req, res) => {
   });
 });
 
-router.get('/products', (req, res) => {
+// Listar produtos
+router.get('/products', (req: Request, res: Response) => {
   const { name } = req.query;
 
   let filteredProducts = products.map(product => {
@@ -35,17 +47,18 @@ router.get('/products', (req, res) => {
     return { ...product, brand };
   });
 
-  if (name && typeof name === 'string') {
+  if (typeof name === 'string') {
     filteredProducts = filteredProducts.filter(product =>
-      product.name.includes(name)
+      product.name.toLowerCase().includes(name.toLowerCase())
     );
   }
 
-  res.status(200).json(filteredProducts);
+  return res.status(200).json(filteredProducts);
 });
 
-router.get('/brands', (req, res) => {
-  res.status(200).json(brands);
+// Listar marcas
+router.get('/brands', (_req: Request, res: Response) => {
+  return res.status(200).json(brands);
 });
 
 export default router;

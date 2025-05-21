@@ -1,34 +1,41 @@
+import fs from 'fs';
+import path from 'path';
+
 export interface Brand {
-    id: string;
-    name: string;
+  id: string;
+  name: string;
+}
+
+export interface Product {
+  id: string;
+  name: string;
+  price: number;
+  description?: string;
+  image?: string;
+  brandId: string;
+}
+
+const productsFile = path.resolve(__dirname, 'products.json');
+const brandsFile = path.resolve(__dirname, 'brands.json');
+
+// Utilitários de carregamento e salvamento
+function load<T>(filePath: string): T[] {
+  if (!fs.existsSync(filePath)) {
+    fs.writeFileSync(filePath, '[]');
   }
-  
-  export interface Product {
-    id: string;
-    name: string;
-    price: number;
-    description?: string;
-    image?: string;
-    brandId: string;
-  }
-  
-  export const brands: Brand[] = [
-    { id: '1', name: 'Apple' },
-    { id: '2', name: 'Samsung' }
-  ];
-  
-  export const products: Product[] = [
-    {
-        id: '1',
-        name: 'iPhone 13',
-        price: 999.99,
-        brandId: '1'
-    },
-    {
-        id: '2',
-        name: 'Galaxy S21',
-        price: 799.99,
-        brandId: '2'
-    }
-  ];
+  const content = fs.readFileSync(filePath, 'utf-8');
+  return JSON.parse(content);
+}
+
+function save<T>(filePath: string, data: T[]): void {
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+
+// Exporta os dados e funções
+export const products: Product[] = load<Product>(productsFile);
+export const brands: Brand[] = load<Brand>(brandsFile);
+
+export function saveProducts(): void {
+  save<Product>(productsFile, products);
+}
   
