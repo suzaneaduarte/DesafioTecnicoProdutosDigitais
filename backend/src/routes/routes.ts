@@ -56,9 +56,15 @@ router.get('/products', (req, res) => {
     return { ...product, brand };
   });
 
-  if (typeof name === 'string') {
-    filteredProducts = filteredProducts.filter(product =>
-      product.name.toLowerCase().includes(name.toLowerCase())
+  if (typeof name === 'string' && name.trim() !== '') {
+    const searchTerm = name.toLowerCase();
+    filteredProducts = filteredProducts.filter(product => 
+      // Busca por nome do produto
+      product.name.toLowerCase().includes(searchTerm) || 
+      // Busca por descrição (se existir)
+      (product.description && product.description.toLowerCase().includes(searchTerm)) || 
+      // Busca por marca
+      (product.brand && product.brand.name.toLowerCase().includes(searchTerm))
     );
   }
 
