@@ -9,7 +9,7 @@ export const api = {
       throw new Error('Erro ao buscar produtos');
     }
     const data = await response.json();
-    return data; // O backend já retorna no formato { data: Product[], total: number }
+    return data; 
   },
 
   async createProduct(product: Omit<Product, 'id'>): Promise<Product> {
@@ -27,7 +27,7 @@ export const api = {
     }
 
     const result = await response.json();
-    return result.product; // Extrai apenas o objeto product da resposta
+    return result.product; 
   },
 
   // Marcas

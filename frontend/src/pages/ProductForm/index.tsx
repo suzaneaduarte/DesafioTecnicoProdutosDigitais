@@ -4,6 +4,12 @@ import { useForm } from 'react-hook-form';
 import styled from 'styled-components';
 import type { Brand } from '../../types';
 import { api } from '../../services/api';
+import Select, { SingleValue } from 'react-select';
+
+interface OptionType {
+  value: string;
+  label: string;
+}
 
 const FormContainer = styled.div`
   width: 100%;
@@ -189,39 +195,6 @@ const Input = styled.input<{ hasError?: boolean }>`
   }
 `;
 
-const Select = styled.select<{ hasError?: boolean }>`
-  ${baseInputStyles}
-  width: 100%;
-  box-sizing: border-box;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23EB043D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 1.25rem center;
-  padding-right: 3rem;
-  cursor: pointer;
-  border-color: ${props => props.hasError ? 'var(--error)' : 'var(--border)'};
-
-  &:hover {
-    border-color: ${props => props.hasError ? 'var(--error)' : 'var(--primary-light)'};
-  }
-
-  &:focus {
-    border-color: ${props => props.hasError ? 'var(--error)' : 'var(--primary)'};
-    box-shadow: 0 0 0 3px ${props => props.hasError ? 'rgba(239, 68, 68, 0.2)' : 'var(--primary-bg)'};
-  }
-
-  @media (max-width: 768px) {
-    padding: 0.875rem 1rem;
-    font-size: 1rem;
-    background-position: right 1rem center;
-    padding-right: 2.5rem;
-  }
-
-  &:invalid {
-    color: var(--text-light);
-  }
-`;
-
 const TextArea = styled.textarea`
   ${baseInputStyles}
   width: 100%;
@@ -317,7 +290,7 @@ const ImageTip = styled.span`
   display: block;
   color: var(--text-light);
   font-size: 0.875rem;
-  margin-top: -2.5rem;
+  margin-top: 0.5rem;
 `;
 
 const ButtonContainer = styled.div`
@@ -443,6 +416,11 @@ export function ProductForm() {
   const [useImageUrl, setUseImageUrl] = useState(false);
   const navigate = useNavigate();
 
+  const brandOptions = brands.map(brand => ({
+    value: brand.id,
+    label: brand.name
+  }));
+
   const {
     register,
     handleSubmit,
@@ -566,16 +544,10 @@ export function ProductForm() {
       let imageData = useImageUrl ? data.image : imagePreview;
       console.log("Utilizando imagem de:", useImageUrl ? "URL externa" : "Upload local");
       
-      // Validação de imagem
       if (!imageData) {
         console.warn("Nenhuma imagem fornecida");
-        // Você pode decidir se quer impedir o envio do formulário aqui
-        // alert("Por favor, forneça uma imagem para o produto.");
-        // setLoading(false);
-        // return;
       }
       
-      // Se a imagem for muito grande (mais de 1MB em base64), use URL
       if (!useImageUrl && imagePreview && imagePreview.length > 1024 * 1024) {
         console.error("Imagem muito grande:", imagePreview.length, "bytes");
         alert('A imagem é muito grande. Por favor, use uma URL de imagem ou uma imagem menor.');
@@ -638,17 +610,99 @@ export function ProductForm() {
                 })} />
                 {errors.price && <ErrorMessage>{errors.price.message}</ErrorMessage>}
               </FormGroup>
-
+              
               <FormGroup>
                 <Label htmlFor="brandId" required>Marca</Label>
-                <Select id="brandId" defaultValue="" hasError={!!errors.brandId} {...register('brandId', {
-                  required: 'Marca é obrigatória'
-                })}>
-                  <option value="" disabled>Selecione uma marca</option>
-                  {brands.map(brand => (
-                    <option key={brand.id} value={brand.id}>{brand.name}</option>
-                  ))}
-                </Select>
+                <Select<OptionType>
+                  id="brandId"
+                  options={brandOptions}
+                  onChange={(option: SingleValue<OptionType>) => setValue('brandId', option?.value || '')}
+                  placeholder="Selecione uma marca"
+                  classNamePrefix="react-select"
+                  styles={{
+                    control: (provided, state) => ({
+                      ...provided,
+                      minHeight: '54px',
+                      padding: '0.25rem 0.25rem',
+                      fontSize: '1.1rem',
+                      borderWidth: '2px',
+                      borderRadius: '8px',
+                      borderColor: errors.brandId ? 'var(--error)' : 'var(--border)',
+                      backgroundColor: 'var(--surface)',
+                      boxShadow: state.isFocused ? 
+                        (errors.brandId ? '0 0 0 3px rgba(239, 68, 68, 0.2)' : '0 0 0 3px var(--primary-bg)') : 
+                        'none',
+                      '&:hover': {
+                        borderColor: errors.brandId ? 'var(--error)' : 'var(--primary-light)'
+                      },
+                      '@media (max-width: 768px)': {
+                        fontSize: '1rem',
+                        padding: '0.175rem 0.175rem',
+                      }
+                    }),
+                    valueContainer: (provided) => ({
+                      ...provided,
+                      padding: '0 1rem',
+                    }),
+                    input: (provided) => ({
+                      ...provided,
+                      color: 'var(--text)',
+                    }),
+                    placeholder: (provided) => ({
+                      ...provided,
+                      color: 'var(--text-light)',
+                    }),
+                    singleValue: (provided) => ({
+                      ...provided,
+                      color: 'var(--text)',
+                    }),
+                    indicatorSeparator: () => ({
+                      display: 'none'
+                    }),
+                    dropdownIndicator: (provided) => ({
+                      ...provided,
+                      color: 'var(--primary)',
+                    }),
+                    menu: (provided) => ({
+                      ...provided,
+                      backgroundColor: 'var(--surface)',
+                      boxShadow: 'var(--shadow-md)',
+                      border: '2px solid var(--primary-light)',
+                      borderRadius: '8px',
+                      marginTop: '4px',
+                      overflow: 'hidden',
+                      zIndex: 10,
+                    }),
+                    menuList: (provided) => ({
+                      ...provided,
+                      maxHeight: '200px',
+                      padding: '0',
+                    }),
+                    option: (provided, state) => ({
+                      ...provided,
+                      cursor: 'pointer',
+                      padding: '0.75rem 1.25rem',
+                      backgroundColor: state.isSelected 
+                        ? 'var(--primary-bg)' 
+                        : state.isFocused 
+                          ? 'var(--background)' 
+                          : undefined,
+                      color: state.isSelected ? 'var(--primary)' : 'var(--text)',
+                      '&:hover': {
+                        backgroundColor: 'var(--primary-bg)',
+                      },
+                      '&:not(:last-child)': {
+                        borderBottomWidth: '1px',
+                        borderBottomStyle: 'solid',
+                        borderBottomColor: 'var(--border)',
+                      }
+                    }),
+                  }}
+                />
+                <input 
+                  type="hidden" 
+                  {...register('brandId', { required: 'Marca é obrigatória' })} 
+                />
                 {errors.brandId && <ErrorMessage>{errors.brandId.message}</ErrorMessage>}
               </FormGroup>
             </FormRow>
@@ -700,14 +754,15 @@ export function ProductForm() {
             
             {useImageUrl && (
               <>
-                <AlignedUrlField>
+                <FormGroup>
+                  <Label htmlFor="imageUrl">URL da Imagem</Label>
                   <Input 
                     id="imageUrl" 
                     type="text" 
                     placeholder="Cole a URL da imagem aqui" 
                     {...register('image')} 
                   />
-                </AlignedUrlField>
+                </FormGroup>
                 
                 <ImagePreviewWrapper useImageUrl={useImageUrl}>
                   <ImagePreview hasImage={!!imagePreview}>
@@ -725,7 +780,7 @@ export function ProductForm() {
             )}
 
             <ImageTip>
-              {useImageUrl ? 'Cole o link completo de uma imagem pública da internet' : 'Recomendado: Imagem com fundo transparente ou branco'}
+              {useImageUrl ? '' : 'Recomendado: Imagem com fundo transparente ou branco'}
             </ImageTip>
           </SideContent>
         </Form>

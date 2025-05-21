@@ -18,7 +18,6 @@ export interface Product {
 const productsFile = path.resolve(__dirname, 'products.json');
 const brandsFile = path.resolve(__dirname, 'brands.json');
 
-// Utilitários de carregamento e salvamento
 function load<T>(filePath: string): T[] {
   if (!fs.existsSync(filePath)) {
     fs.writeFileSync(filePath, '[]');
@@ -31,7 +30,6 @@ function save<T>(filePath: string, data: T[]): void {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
-// Exporta os dados e funções
 export const products: Product[] = load<Product>(productsFile);
 export const brands: Brand[] = load<Brand>(brandsFile);
 
