@@ -239,11 +239,6 @@ const ErrorMessage = styled.span`
   margin-top: -0.25rem;
 `;
 
-const ImageUploadContainer = styled(FormGroup)`
-  grid-column: 3;
-  grid-row: span 3;
-`;
-
 const ImagePreviewWrapper = styled.div`
   position: relative;
   width: 100%;

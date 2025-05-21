@@ -7,18 +7,32 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
+# Dependências e builds
+node_modules/
+dist/
+dist-ssr/
 *.local
 
-# Editor directories and files
+# Arquivos sensíveis
+.env
+backend/.env
+
+# Vite
+frontend/.vite/
+
+# IDEs e editores
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Ignorar outputs duplicados em subpastas
+frontend/node_modules/
+frontend/dist/
+backend/node_modules/
+backend/dist/
