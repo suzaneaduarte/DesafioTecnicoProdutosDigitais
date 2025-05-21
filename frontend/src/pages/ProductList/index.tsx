@@ -282,6 +282,11 @@ export function ProductList() {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
+  // Resetar para a página 1 quando o termo de busca mudar
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [debouncedSearchTerm]);
+
   useEffect(() => {
     async function loadProducts() {
       setLoading(true);
