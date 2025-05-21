@@ -3,8 +3,20 @@ import type { Brand, Product } from '../types';
 // API Service
 export const api = {
   // Produtos
-  async getProducts(page: number = 1, name?: string): Promise<{ data: Product[], total: number }> {
-    const response = await fetch(`http://localhost:3000/api/products?page=${page}&name=${name || ''}`);
+  async getProducts(
+    page: number = 1, 
+    name?: string, 
+    brand?: string, 
+    description?: string
+  ): Promise<{ data: Product[], total: number }> {
+    // Construir URL com os parâmetros disponíveis
+    let url = `http://localhost:3000/api/products?page=${page}`;
+    
+    if (name) url += `&name=${encodeURIComponent(name)}`;
+    if (brand) url += `&brand=${encodeURIComponent(brand)}`;
+    if (description) url += `&description=${encodeURIComponent(description)}`;
+    
+    const response = await fetch(url);
     if (!response.ok) {
       throw new Error('Erro ao buscar produtos');
     }

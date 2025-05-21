@@ -47,15 +47,16 @@ router.post('/products', (req, res) => {
 
 // Listar produtos
 router.get('/products', (req, res) => {
-  const { name, page = '1' } = req.query;
+  const { name, brand, description, page = '1' } = req.query;
   const currentPage = parseInt(page as string) || 1;
   const itemsPerPage = 4; 
 
   let filteredProducts = products.map(product => {
-    const brand = brands.find(b => b.id === product.brandId);
-    return { ...product, brand };
+    const productBrand = brands.find(b => b.id === product.brandId);
+    return { ...product, brand: productBrand };
   });
 
+  // Filtro por nome (busca geral que continua funcionando como antes)
   if (typeof name === 'string' && name.trim() !== '') {
     const searchTerm = name.toLowerCase();
     filteredProducts = filteredProducts.filter(product => 
@@ -65,6 +66,22 @@ router.get('/products', (req, res) => {
       (product.description && product.description.toLowerCase().includes(searchTerm)) || 
       // Busca por marca
       (product.brand && product.brand.name.toLowerCase().includes(searchTerm))
+    );
+  }
+
+  // Filtro específico por marca
+  if (typeof brand === 'string' && brand.trim() !== '') {
+    const brandTerm = brand.toLowerCase();
+    filteredProducts = filteredProducts.filter(product => 
+      product.brand && product.brand.name.toLowerCase().includes(brandTerm)
+    );
+  }
+
+  // Filtro específico por descrição
+  if (typeof description === 'string' && description.trim() !== '') {
+    const descTerm = description.toLowerCase();
+    filteredProducts = filteredProducts.filter(product => 
+      product.description && product.description.toLowerCase().includes(descTerm)
     );
   }
 

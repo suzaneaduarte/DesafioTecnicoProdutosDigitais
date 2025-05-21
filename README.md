@@ -16,7 +16,7 @@ Aplicação web desenvolvida em React + TypeScript que permite o cadastro, lista
 ## Funcionalidades
 
 - Listagem de produtos com:
-  - Busca por nome (com debounce)
+  - Busca por nome, descrição e marca
   - Paginação
   - Visualização dos detalhes do produto em modal 
 
@@ -36,7 +36,7 @@ Aplicação web desenvolvida em React + TypeScript que permite o cadastro, lista
 
 - Responsividade adequada para telas mobile
 
-- Tratamento de erros avançado:
+- Tratamento de erros:
   - Validação no frontend e backend
   - Mensagens de erro detalhadas
   - Feedback visual intuitivo
@@ -45,21 +45,13 @@ Aplicação web desenvolvida em React + TypeScript que permite o cadastro, lista
 
 ### Lista de Produtos
 
-Nesta tela é possível visualizar todos os produtos cadastrados com seus respectivos nomes, marcas, preços e imagens. Também é possível filtrar produtos pelo nome e navegar por diferentes páginas. 
+Nesta tela é possível visualizar todos os produtos cadastrados com seus respectivos nomes, marcas, preços e imagens. Também é possível filtrar produtos pelo nome, descrição e marca. Além de também ser possível navegar por diferentes páginas. 
 
-![lista-produtos](https://github.com/user-attachments/assets/257ba98a-9849-429f-b5ba-47cdc2eead47)
 
 ### Cadastro de Produto
 
 A tela de cadastro permite inserir nome, preço, marca, descrição e imagem do produto. Os campos obrigatórios possuem validações visuais em tempo real, mensagens de erro detalhadas e feedback imediato, garantindo uma experiência fluida e segura para o usuário.
 
-![cadastro-produtos](https://github.com/user-attachments/assets/e66813d3-90ad-4845-b2f2-12027fe4c858)
-
-### Simulação de Delay / Carregamento
-
-Para simular o comportamento de uma API real, o sistema introduz um pequeno delay no carregamento dos dados. Durante esse tempo, um estado de "loading" é exibido de forma clara ao usuário.
-
-![load-tratamento-dados](https://github.com/user-attachments/assets/394b4594-e854-4d39-926d-42a377aed23b)
 
 ## Como executar localmente
 
@@ -106,6 +98,61 @@ projeto/
     │   ├── database/        # Mock database com JSON
     │   └── index.ts         # Entrada da aplicação
 ```
+
+## Testes da API  
+
+Esta API foi testada usando o [Postman](https://www.postman.com/) e possui uma [coleção de testes](./ProdutosDigitaisAPI.postman_collection.json) configurada com variáveis e endpoints para facilitar o desenvolvimento.
+
+### Variável de ambiente configurada
+
+| Variável  | Valor                   |
+| --------- | ----------------------- |
+| `baseUrl` | `http://localhost:3000` |
+
+Foi utilizado `{{baseUrl}}` nas requisições para facilitar a mudança entre ambientes.
+
+### Endpoints Testados
+
+#### `GET /api/products` — Buscar Produtos
+
+* Retorna todos os produtos cadastrados no Banco de Dados. 
+
+#### `GET /api/brands` — Buscar Marcas
+
+* Lista todas as marcas cadastradas.
+
+#### `GET /api/products?name=...` — Busca por nome 
+
+* Testa o Filtro por Nome
+* Exemplo de uso: `?name=sabonete`
+* Retorna produtos cujo nome contenha **sabonete** como valor informado.
+
+#### `GET /api/products?description=...` — Busca por Descrição
+
+* Testa o Filtro por Descrição
+* Exemplo de uso: `?description=finos`
+* Retorna produtos cujo campo de descrição contenha **finos**. 
+
+#### `GET /api/products?brand=...` — Busca por marca 
+
+* Testa o Filtro por Marca
+* Exemplo de uso: `?brand=Dove`
+* Retorna produtos associados a uma marca pelo **nome** da marca.
+
+#### `POST /api/products` — Criar Produto
+
+* Adiciona um novo produto com os campos:
+
+  * `name`, `price`, `brandId` (obrigatórios)
+  * `description`, `image` (opcionais)
+
+### Importar no Postman
+
+Caso você deseje, é possível importar a coleção diretamente no Postman:
+
+1. Clique em **Import** no Postman
+2. Selecione o arquivo `ProdutosDigitaisAPI.postman_collection.json`
+3. Todos os endpoints estarão organizados e prontos para uso
 
 ## 👩‍💻 Desenvolvido por
 
